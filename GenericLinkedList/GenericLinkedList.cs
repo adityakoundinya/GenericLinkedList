@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GenericLinkedList
 {
@@ -28,7 +24,12 @@ namespace GenericLinkedList
         }
 
         private Node Head { get; set; }
-        private int Size = 0;
+        private int size = 0;
+        public int Count {
+            get {
+                return size;
+            }
+        }
 
         public void AddToEnd(T item) {
             Node newNode = new Node();
@@ -40,7 +41,7 @@ namespace GenericLinkedList
                 Node curr = GetLastNode();
                 curr.Next = newNode;
             }
-            this.Size++;
+            this.size++;
         }
 
         public void AddToTop(T item) {
@@ -53,14 +54,14 @@ namespace GenericLinkedList
                 newNode.Next = this.Head;
                 this.Head = newNode;
             }
-            this.Size++;
+            this.size++;
         }
 
         public void AddAt(T item, int position) {
             Node newNode = new Node();
             newNode.Data = item;
 
-            if ((this.Head == null && position > 1) || position < 0 || position > this.Size + 1) {
+            if ((this.Head == null && position > 1) || position < 0 || position > this.size + 1) {
                 throw new ArgumentOutOfRangeException("The supplied position is invalid.");
             }
 
@@ -68,7 +69,7 @@ namespace GenericLinkedList
                 AddToTop(item);
                 return;
             }
-            if (position == this.Size + 1) {
+            if (position == this.size + 1) {
                 AddToEnd(item);
                 return;
             }
@@ -83,7 +84,7 @@ namespace GenericLinkedList
             }
             prev.Next = newNode;
             newNode.Next = curr;
-            this.Size++;
+            this.size++;
         }
 
         public bool Remove(T item) {
@@ -97,7 +98,7 @@ namespace GenericLinkedList
             if (this.Head.Data.Equals(item)) {
                 if (next != null) {
                     this.Head = next;
-                    this.Size--;
+                    this.size--;
                     return true;
                 }
             } else {
@@ -108,7 +109,7 @@ namespace GenericLinkedList
 
                     if (curr.Data.Equals(item)) {
                         prev.Next = next;
-                        this.Size--;
+                        this.size--;
                         return true;
                     }
                 }
@@ -123,7 +124,7 @@ namespace GenericLinkedList
             if (position < 1) {
                 return false;
             }
-            if (position > this.Size) {
+            if (position > this.size) {
                 return false;
             }
 
@@ -134,7 +135,7 @@ namespace GenericLinkedList
 
             if (position == 1) {
                 this.Head = next;
-                this.Size--;
+                this.size--;
                 return true;
             }
 
@@ -142,7 +143,7 @@ namespace GenericLinkedList
 
                 if (count == position) {
                     prev.Next = next;
-                    this.Size--;
+                    this.size--;
                     return true;
                 }
 
@@ -163,7 +164,7 @@ namespace GenericLinkedList
             if (position < 1) {
                 throw new IndexOutOfRangeException("The position has to be greater than 1.");
             }
-            if (position > this.Size) {
+            if (position > this.size) {
                 throw new IndexOutOfRangeException("The supplied position is greater than the elements in the list.");
             }
 
